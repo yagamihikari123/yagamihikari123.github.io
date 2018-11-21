@@ -1,1 +1,232 @@
+#1.简单的词法分析
+'''输入样例
+#include <iostream>
+using namespace std;
+int main(){
+    int a = 10;
+    double b = -20.9;
+    if(a<=b)
+        a+=b;
+    else
+        a=2b+6;
+    return a;
+}
+'''
+import os
+import re
 
+key_words = ["include","using namespace std","int","main","double","if","else","return"]
+ope = ["+=","<=","-","+","=","<",">","#"]
+delimiters = [";","(",")","{","}"]
+value = re.compile(r'([-+]?)([0-9]*)\.([0-9]*)')
+
+def what_is(input):
+    if input in key_words:
+        return ("关键词")
+    elif input in ope:
+        return("ope")
+    elif input in delimiters:
+        return("界符")
+    elif (input.isalpha() or (not(input[0].isdigit()) and input[1:].isalpha())):
+        return("identifier")
+    elif (value.match(input) or input.isdigit()):
+        return("number")
+    elif (input[0].isdigit() and input[1:].isalnum()):
+        return("illegal def_name")
+    else :
+        return("others")
+
+def fenge(str):
+    new_str = ""
+    begginning_length = len(str)
+    for aa in range(begginning_length):
+        if str[aa] in delimiters:
+
+            new_str += ' '
+            new_str += str[aa]
+            new_str += ' '
+        elif ((str[aa] == "-") and str[aa+1].isdigit()):
+            #不适用于正常的格式
+            new_str += ' '
+            new_str += str[aa]
+        elif str[aa] in ope:
+            if str[aa]+str[aa+1] in ope:
+                new_str += ' '
+                new_str += str[aa]
+            elif str[aa-1]+str[aa] in ope:
+                new_str += str[aa]
+                new_str += ' '
+            else:
+                new_str += ' '
+                new_str += str[aa]
+                new_str += ' '
+            '''
+            elif str[aa-1]+str[aa] in ope:
+                new_str += str[aa]
+                new_str += ' '
+            elif str[aa]+str[aa+1] in ope:
+                new_str += ' '
+                new_str += str[aa]     
+            else:
+                new_str += ' '
+                new_str += str[aa]
+                new_str += ' '
+            '''
+        else:
+            new_str += str[aa]
+ #   print(new_str)
+    return new_str
+
+lines = []
+new_lines = []
+f = open(r'C:\.input.c','r')
+lines = f.readlines()
+#print(type(lines))
+print()
+j = 0
+for x in lines:
+     #print(type(x))
+  #  print(x)
+#    print(lines[j])    #两个一样
+   # print(type(new_lines))
+   #  fenge(x)
+     new_lines.append(fenge(x))
+     j += 1
+  #  print(new_lines)
+  #  print(x)
+
+f.close()
+#new_f.close()
+#print(lines)
+
+line_num = 0
+for line in new_lines:
+    line_num += 1
+    str(line)
+    print("第", line_num, "行： ")
+    for words in line.split():
+      #  print(words)
+        print(line_num,' ',words,' ',what_is(words))
+
+       # print(words)
+# print(line_num," ",line)
+
+#防秒退
+input()
+
+
+
+
+
+#2.简单的语法分析
+'''输入语法
+G[E]：
+	E→eBaA
+  A→a|bAcB
+	B→dEd|aC
+	C→e|dC
+'''
+str1 = "eadeaa"
+str2 = "edeaebd"
+str3 = "edeaeaadabacae"
+
+string = input("请输入字符串：")
+
+# for x in range(len(str1)):
+#     print(str1[x])
+
+strr = string
+print_str = ""
+global i
+i = -2
+def ParseE():
+    global i,print_str
+    print_str += '<'
+    i += 1
+  #  print(i)
+    #i = i + 1
+    if strr[i+1] == 'e':
+      #  print("E",strr[i+1])
+        MatchToken('e')
+        ParseB()
+        MatchToken('a')
+        ParseA()
+    else:
+        print("errorE")
+        print("输入符号串不是该文法句子")
+        exit()
+    print_str += '>'
+
+def ParseA():
+    global i,print_str
+    print_str += '<'
+    i += 1
+    if strr[i+1] == 'a':
+        MatchToken('a')
+        i += 1
+    elif strr[i+1] == 'b':
+        MatchToken('b')
+        ParseA()
+        MatchToken('c')
+        ParseB()
+    else:
+        print("errorA")
+        print("输入符号串不是该文法句子")
+        exit()
+    print_str += '>'
+
+def ParseB():
+    global i,print_str
+    print_str += '<'
+    i += 1
+    if strr[i+1] == 'd':
+        MatchToken('d')
+        ParseE()
+        MatchToken('d')
+        i += 1
+    elif strr[i+1] == 'a':
+        MatchToken('a')
+        ParseC()
+    else:
+        print("errorB")
+        print("输入符号串不是该文法句子")
+        exit()
+    print_str += '>'
+
+def ParseC():
+    global i,print_str
+    print_str += '<'
+    i += 1
+    if strr[i+1] == 'e':
+        MatchToken('e')
+        i += 1
+    elif strr[i+1] == 'd':
+        MatchToken('d')
+        ParseC()
+    else:
+        print("errorC")
+        print("输入符号串不是该文法句子")
+        exit()
+    print_str += '>'
+
+def MatchToken(t):
+    global i,print_str
+   # print(t,i)
+    #i += 1
+    if strr[i+1] == t:
+        #print("BUDUI",t)
+        #print("error",t)
+        #print(i+2,"dui",t)
+        print_str += t
+        #print(print_str)
+    else:
+        print("error! 从MatchToken",i+2,"起无法匹配")
+        print("输入符号串不是该文法句子")
+        exit()
+
+ParseE()
+print(print_str)
+if i != (len(strr)-2):
+    print("输入符号串是该文法句子！")
+else:
+    print("输入符号串不是该文法句子")
