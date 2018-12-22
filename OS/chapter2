@@ -7,11 +7,7 @@ S2:  b=z+1;
 S3:  c=a-b;
 S4:  w=c+1.
 
-
-
- ![image](https://github.com/yagamihikari123/yagamihikari123.github.io/blob/master/OS/photos/undefined)
-
-
+ ![image](https://github.com/yagamihikari123/yagamihikari123.github.io/blob/master/OS/photos/Z4F%24M4AH83J3ZDFX1H2HB87.png)
 
 3，为什么程序并发执行会产生间断性特征？
 程序在并发执行时，由于它们共享系统资源，以及为完成同一项任务而互相合作，致使在这些并发执行的程之间形成了相互制约的关系。而相互制约将导致并发程序具有“执行——暂停——执行”这种间断性的活动规律。
