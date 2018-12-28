@@ -1,0 +1,93 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import xlwt
+import xlrd
+'''
+# 读部分
+
+# 得到excel的book对象，实例化对象
+book = xlrd.open_workbook(r"C:/Users/lenovo/Desktop/1.xlsx")
+# print(type(book))  #结果<class 'xlrd.book.Book'>
+
+# 通过sheet索引获得sheet对象
+sheet0 = book.sheet_by_index(0)
+# index(n)指的是excel文件中第n+1个表
+# print(sheet0)   # 结果<xlrd.sheet.Sheet object at 0x000001F76F9F4A20>
+# print(type(sheet0)) # 结果<class 'xlrd.sheet.Sheet'>
+
+# 获取文件中的表名
+sheet_name = book.sheet_names()[0]
+# print(sheet_name)   # 结果 sheet1，第一个表为[0],第二个为[1]...
+
+# 通过名字来获取，知道名字可以直接用
+sheet1 = book.sheet_by_name(sheet_name)
+# print(sheet1)   # 结果<xlrd.sheet.Sheet object at 0x000001E37946EBA8>
+# print(type(sheet1))     # 结果<class 'xlrd.sheet.Sheet'>
+
+#打印行数
+nrows = sheet0.nrows    # sheet0可以by index也可以by name
+# print(nrows)
+
+# 打印前3行内容
+# for i in range(3):
+#     print(sheet1.row_values(i))
+
+# 打印第1列数据
+# print(sheet0.col_values(0))
+
+# 打印第5行第5列内容
+# print(sheet0.cell_value(4,4))
+
+# 循环打印第i行第j列数据，range（m,n)到n的前一个
+# for i in range(2,7):
+#     for j in range(3,6):
+#         print(sheet0.cell_value(i,j))
+'''
+
+'''分割线'''
+# 写部分
+book = xlwt.Workbook(encoding='utf-8',style_compression=0)
+'''
+Workbook类初始化时有encoding和style_compression参数
+encoding:设置字符编码，一般要这样设置：w = Workbook(encoding='utf-8')，就可以在excel中输出中文了。
+默认是ascii。当然要记得在文件头部添加：
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+style_compression:表示是否压缩，不常用。
+'''
+
+# 创建一个sheet对象，一个sheet对象对应Excel文件中的一张表格。
+# 在电脑桌面右键新建一个Excel文件，其中就包含sheet1，sheet2，sheet3三张表
+sheet = book.add_sheet('test', cell_overwrite_ok=True)
+# 其中的test是这张表的名字,cell_overwrite_ok，表示是否可以覆盖单元格，其实是Worksheet实例化的一个参数，默认值是False
+# 向表test中添加数据
+sheet.write(0, 0, 'EnglishName')  # 其中的'0-行, 0-列'指定表中的单元，'EnglishName'是向该单元写入的内容
+sheet.write(1, 0, 'Marcovaldo')
+txt1 = '中文名字'
+txt1 = txt1.encode('utf-8')
+# print(txt1)   #结果b'\xe4\xb8\xad\xe6\x96\x87\xe5\x90\x8d\xe5\xad\x97'
+sheet.write(0, 1, txt1.decode('utf-8'))  # 此处需要将中文字符串解码成unicode码，否则会报错
+txt2 = '马可瓦多'
+txt2 = txt2.encode('utf-8')
+sheet.write(1, 1, txt2.decode('utf-8'))
+ee = ['hi' , 'hello' , 'ya' ,'ll','5566','lalal']
+for i in range(6):
+    sheet.write(2,i,ee[i])
+ff = ['沧海','一声','笑']
+for i in range(3):
+    sheet.write(3,i,ff[i])
+# 最后，将以上操作保存到指定的Excel文件中
+#   保存
+book.save(r'C:/Users/lenovo/Desktop/test1.xls')
+# 在字符串前加r，声明为raw字符串，这样就不会处理其中的转义了。否则，可能会报错
+
+
+
+'''
+excel读写基础总结
+1.先声明编码类型
+2.文件位置的格式可以不用windows下的 \ 而选用windows和linux通用的 / 
+这样运行没问题，否则有时会出现用引号注释的未知错误
+3.如果注释后面有波浪线很烦，可以在 # 后面加一个或多个空格
+'''
