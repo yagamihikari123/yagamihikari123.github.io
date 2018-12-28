@@ -1,0 +1,136 @@
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
+ 
+from bs4 import BeautifulSoup
+import urllib.request
+import re
+ 
+Title = []
+Num = []
+Href = []
+Time = []
+ 
+def handlechapter(url):
+    response = urllib.request.urlopen(url)
+    html = response.read().decode('utf-8')
+    return html
+ 
+url = 'http://tieba.baidu.com/f?kw=%E4%B8%9C%E5%8C%97%E5%A4%A7%E5%AD%A6%E7%A7%A6%E7%9A%87%E5%B2%9B%E5%88%86%E6%A0%A1&ie=utf-8&pn=0'
+url1 = 'http://tieba.baidu.com/f?kw=%E4%B8%9C%E5%8C%97%E5%A4%A7%E5%AD%A6%E7%A7%A6%E7%9A%87%E5%B2%9B%E5%88%86%E6%A0%A1&ie=utf-8&pn=50'
+ 
+html = handlechapter(url)
+url_soup = BeautifulSoup(html, 'html.parser')
+ 
+zd_num = 0
+for zd in url_soup.find_all("li", class_="thread_top"):
+    zd_num = zd_num + 1
+ 
+#print(zd_num)
+for a in url_soup.find_all("div", class_="pull_right"):
+    aa = a.find_all("span")[1].get_text().strip()
+    #time = aa.find(title=re.compile("最后回复时间"))
+ 
+    # aa = a.find("span",class_="threadlist_reply_date pull_right j_reply_data")
+    # if (str(aa)=="None"):
+    #     time = " "
+    # else:
+    #     time = aa.get_text().strip()
+    # #print(time)
+    Time.append(aa)
+ 
+for b in url_soup.find_all("div",class_="j_threadlist_li_left"):
+    num = b.find_all("span")[0].get_text().strip()
+   # print("回复数：",num)
+    Num.append(num)
+ 
+for c in url_soup.find_all("div",class_="j_th_tit"):
+    title = c. find_all("a")[0].get_text().strip()
+   # print("[",title,"]")
+    Title.append(title)
+ 
+for f in url_soup.find_all("div",class_="j_th_tit"):
+    ff = f.a
+    fff = ff.get('href')
+    #print(fff)
+    ffff = "http://tieba.baidu.com"+fff
+    Href.append(ffff)
+ 
+# for x in range(0,50):
+#     print("[",Title[x],"]")
+#     print("回复数：",Num[x])
+#     print(" 链接：",Href[x])
+#     if (x<zd_num):
+#         print("置顶帖")
+#     else:
+#         print("时间：",Time[2*x-1])
+ 
+#print(type(Title[0]))
+ 
+#写入文件
+import sys
+import os
+import io
+ 
+ 
+# class Logger(object):
+#     def __init__(self, filename="Default.log"):
+#         self.terminal = sys.stdout
+#         self.log = open(filename, "a")
+#
+#     def write(self, message):
+#         self.terminal.write(message)
+#         self.log.write(message)
+#
+#     def flush(self):
+#         pass
+ 
+# path = os.path.abspath(os.path.dirname(__file__))
+# type = sys.getfilesystemencoding()
+# sys.stdout = Logger('a.txt')
+#
+# print(path)
+# print(os.path.dirname(__file__))
+# print('------------------')
+ 
+'''
+def printFile(f, output):
+    print(output)
+    f.writelines(output + '\n')
+if __name__ == '__main__':
+    filename = input('Please enter a filename:\n')
+    f = open(filename, 'w')
+    for x in range(0, 50):
+        printFile(f,"[")
+        printFile(f, Title[x])
+        printFile("]\n")
+        printFile(f,"回复数：")
+        printFile(f, num[x])
+        printFile(f," 链接：")
+        printFile(f, Href[x])
+        printFile(f,"\n")
+        if (x < zd_num):
+            printFile("置顶帖")
+        else:
+            printFile(f,"时间：")
+            printFile(f, Time[2 * x - 1])
+  #  printFile(f,Title[0])
+  #  printFile(f, '2')
+   # printFile(f, 'Thx')
+    f.close()
+'''
+f = open(r"C:\Users\lenovo\.PyCharm2018.2\config\scratches\a.txt", 'w+',encoding='utf-8')
+'''
+    在Python中\是转义符，\\u表示其后是UNICODE编码，
+因此\\User在这里会报错，在字符串前面加个r表示就可以了
+'''
+ 
+#sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='gb18030')
+for x in range(0,50):
+    #print(Title[x].encode('latin-1').decode('unicode_escape'), file=f)
+    print("[",Title[x],"]",file=f)
+    print("回复数：",Num[x],"  链接：",Href[x],file=f)
+    #print(" 链接：",Href[x], file=f)
+    if (x<zd_num):
+        print("置顶帖", file=f)
+    else:
+        print("最后回复时间：",Time[2*x-1], file=f)
