@@ -1,0 +1,109 @@
+#coding=utf-8
+
+#import docx    #不要用错库，正确应该是python-docx
+from docx import Document
+from docx.enum.text import WD_ALIGN_PARAGRAPH   #居中
+from docx.shared import RGBColor    #字体颜色
+from docx.shared import Pt  #字体大小
+from docx.oxml.ns import qn
+from docx.shared import Inches
+
+#创建文档
+b = Document()
+
+#标题
+'''
+后面的数字可以换，对应几级标题
+'''
+b.add_heading('title0',0)
+b.add_heading('title1',1)
+
+#段落
+'''
+设置了之后整个段落字体都变了，标题字体不变
+'''
+b.add_paragraph('paragraph')
+b.styles['Normal'].font.name = u'黑体'
+
+b.add_paragraph('and')
+b.styles['Normal']._element.rPr.rFonts.set(qn('w:eastAsia'), u'宋体')
+
+
+#段落文字居中
+bb = b.add_paragraph()
+bb.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+run = bb.add_run(u'鸭鸭鸭')
+
+# bbb = b.add_heading()
+# bbb.heading_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+# run1 = bbb.add_run(u'ribao')
+#AttributeError: 'Paragraph' object has no attribute 'heading_format'
+
+'''
+颜色和字体大小只针对run的内容
+以下相当于给run附加属性
+'''
+
+font_name = u'楷体_gb2312'
+#颜色
+run.font.color.rgb = RGBColor(0,0,255)
+#字体大小
+run.font.size = Pt(28)
+run.font.name = font_name
+# r = run._element
+# r.rPr.rFonts.set(qn('w:eastAsia'), font_name)
+
+'''
+b是文件类型，bb是段落类型
+# c = b.add_run(u'1515')
+# AttributeError: 'Document' object has no attribute 'add_run'
+'''
+
+c = bb.add_run(u'1515')
+c.font.name = u'宋体'
+#c.styles['Normal'].font.name = u'宋体'
+
+#分页
+b.add_page_break()
+
+cc = b.add_paragraph('\ndadand')
+b.add_heading('may')
+
+#添加表格
+table = b.add_table(rows=3,cols=3,style="Table Grid") #添加2行3列的表格
+
+hdr_cells = table.rows[0].cells   # 表格第一行的所含有的所有列数
+hdr_cells[0].text = 'Qty'    # 第一行的第一列,给这行里面添加文字
+hdr_cells[1].text = 'Id'
+hdr_cells[2].text = 'Desc'
+
+aaa = 'abcdefghijklmn'
+#table.cell(1,2).text = u'95959'
+for i in range(1,3):
+    for j in range(3):
+        table.cell(i,j).text = aaa[i+j]
+
+#插入图片
+#图片和python文件不在同一个文件夹下面的时候，要补全文件地址
+pic = b.add_picture(r'C:/Users/lenovo/Pictures/git/Z4F$M4AH83J3ZDFX1H2HB87.png',width = Inches(5))
+#图片居中设置
+last_paragraph = b.paragraphs[-1]
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+
+#保存文件，不保存在目录里看不见
+b.save(r"D:/pycharm/coding/b.docx")
+
+
+
+'''
+注意打开word文件时无法修改
+文件下不要起和函数库名字相同
+'''
+'''
+参考的一些文章
+官方文档 https://python-docx.readthedocs.io/en/latest/
+https://www.cnblogs.com/wrajj/p/4914102.html
+https://www.jianshu.com/p/ebe290a6a6e1
+https://www.cnblogs.com/YuzL/p/9342061.html
+'''
