@@ -1,0 +1,361 @@
+#   1.输出“hello world”
+'''
+    print("hello world"，23)     可同时输出多个
+'''
+#   2.输入
+'''
+    input("please input a word:")
+    key = input()
+'''
+#   3.注释详解
+'''
+单行用 # 来注释
+多行用 三个‘ 或者三个“
+'''
+#   4.代码格式
+#   emmmm，格式指哪种的
+#   5.Python中 ； 的作用
+#   在定义时可以加在后面，表明这个已经定义完，可以开始下一个
+#   6.导入模块
+'''
+    import导入模块或函数
+    from 为导入的模块，其后面import为该模块的函数，多个函数用 ， 隔开
+'''
+#   7.运算符
+"""
+    1.算术运算符
+        加+   减-   乘*    除/   取余%     
+        求幂**    取余向下求整//
+    2.比较运算符
+        等于==    不等于！=   大于>     小于<     大于等于>=    小于等于<=
+    3.赋值运算符
+        等于=     +=  -=  *=  /=  **=  //=   %=
+    4.逻辑运算符
+        与and    或or     非not    
+        位运算中：
+            与&  或|   取反~   异或^       左移<<（二进制左移符号右侧位数）   右移>>
+    5.成员运算符
+        in 在指定序列中找到值返回True
+        not in
+        以列表举例，见后面
+    6.身份运算符
+        is 判断两个标识符是不是引用自一个对象
+        not is 不是引用自一个对象
+        看起来大致和 == 效果一样，但is是拿内存地址判断的，查看内存的函数为id()
+        以下例子‘
+                  a = 'alex @'
+                  b = 'alex @1'
+                  # a = [11,22,33]
+                  # b = [11,22,33]
+                  print(id(a))
+                  print(id(b))
+                  print('==   ',a == b)
+                  print('id   ',id(a) == id(b))
+                  print('is   ',a is b)
+                  ’
+"""
+#   8.变量定义及使用
+#   emmmm...
+#   9.主要数据类型
+'''
+    1.整形 int
+        可以通过int()将一个数转换为整数
+        如：a = 1.0
+            print(a)
+            print(int(a))
+    2.浮点型 float
+        通过float()转换为一个浮点数
+        如：a = 1
+            print(a)
+            print(float,float(a))
+    3.字符串型 str
+        创建用''或者""
+        类似于数组，从str[0]开始
+        连接用+    重复输出用*      用[]截取字符串一部分（左闭右开）
+        字符串中包含特定字符用in
+        在之前加r/R不用转义，即原始字符
+        格式化%类似于占位符
+    4.布尔型 bool
+        True/False
+        1/0
+'''
+#   10.字符串函数
+'''
+    举几个常用的，详细参考http://www.runoob.com/python3/python3-string.html
+    len() 求字符串长度
+    rstrip()  删除字符串末尾空格
+    replace()  替换字符串
+        用法 str.replace(old, new[, max])  最后一个参数一般不用
+        old -- 将被替换的子字符串。
+        new -- 新字符串，用于替换old子字符串。
+        max -- 可选字符串, 替换不超过 max 次
+'''
+#   11.字节与字符串
+'''
+    https://www.cnblogs.com/abclife/p/7445222.html
+    Python3中内置类型bytes和str用法及byte和string之间各种编码转换
+    Python 3最重要的新特性大概要算是对文本和二进制数据作了更为清晰的区分。
+    文本总是 Unicode，由str类型表示，二进制数据则由bytes类型表示。
+    Python 3不会以任意隐式的方式混用str和bytes，正是这使得两者的区分特别清晰。
+    你不能拼接字符串和字节包，也无法在字节包里搜索字符串（反之亦然），也不能将字符串传入参数为字节包的函数（反之亦然）.
+    例：a = 'hello'
+        print(type(a),a)
+        print(type(a.encode()),a.encode())  #括号里可加编码方式
+        print(type(a.encode().decode()),a.encode().decode())
+        # <class 'str'> hello
+        # <class 'bytes'> b'hello'
+        # <class 'str'> hello
+'''
+#   12.列表List
+'''
+    列表是最常用的Python数据类型，它可以作为一个方括号内的逗号分隔值出现。
+    列表的数据项不需要具有相同的类型
+    创建一个列表，只要把逗号分隔的不同的数据项使用方括号括起来即可。
+    如果只输出一个不加[]，多个则需要
+    如：list1 = ['Google', 'Runoob', 1997, 2000];
+        list2 = [1, 2, 3, 4, 5, 6, 7 ]; 
+        print ("list1[0]: ", list1[0])
+        print ("list2[1:5]: ", list2[1:5])
+        list1[0]:  Google
+        list2[1:5]:  [2, 3, 4, 5]
+    加 .append()     删除 del list[i]
+'''
+#   13.元组tuple
+'''
+    Python 的元组与列表类似，不同之处在于元组的元素不能修改。
+    元组使用小括号，列表使用方括号。  --不需要括号也可以
+    元组创建很简单，只需要在括号中添加元素，并使用逗号隔开即可。
+    定义的时候其后面可以加分号。
+    
+    元组中只包含一个元素时，需要在元素后面添加逗号，否则括号会被当作运算符使用：
+    >>>tup1 = (50)
+    >>> type(tup1)     # 不加逗号，类型为整型
+    <class 'int'>
+
+    >>> tup1 = (50,)
+    >>> type(tup1)     # 加上逗号，类型为元组
+    <class 'tuple'>
+'''
+#   14.字典
+'''
+    字典是另一种可变容器模型，且可存储任意类型对象。
+    字典的每个键值(key=>value)对用冒号(:)分割，每个对之间用逗号(,)分割，
+    整个字典包括在花括号({})中 ,格式如下所示：
+    d = {key1 : value1, key2 : value2 }
+    键必须是唯一的，但值则不必。
+    值可以取任何数据类型，但键必须是不可变的，如字符串，数字或元组。
+    一个简单的字典实例：
+    可以用字符串，数字，元组。不可以用列表（会出现 TypeError: unhashable type: 'list'） 
+    dict = {'Alice': '2341', 55: 66, ('hey',5):('ad',6)}
+'''
+#   15.控制流程
+'''
+    1.if    注意冒号
+    if condition_1:
+        statement_block_1
+    elif condition_2:
+        statement_block_2
+    else:
+        statement_block_3
+    2.for
+    如果要循环n次，则使用内置range()函数，会生成数列
+    for i in range(6):
+        print(i)    #输出0，1，2，3，4，5
+    for i in range(4,8):
+        print(i)    #输出4，5，6，7
+    同理可输出列表和元组类型，字典不可以
+    lala = [1,2,3,4]
+    for x in lala:
+        print(x)
+    lele = (1,2,3,4)
+    for x in lele:
+        print(x)
+    在循环中使用break，则跳出当前循环体（整个循环）
+    3.while
+    while 判断条件：
+        语句
+    没有do...while循环
+    或者： while condition:
+           ...
+           else
+    4.break / continue / pass
+    break 语句可以跳出 for 和 while 的循环体。
+        如果你从 for 或 while 循环中终止，任何对应的循环 else 块将不执行
+    continue语句被用来告诉Python跳过当前循环块中的剩余语句，然后继续进行下一轮循环。
+    pass是空语句，是为了保持程序结构的完整性。
+         不做任何事情，一般用做占位语句
+         如：
+         for letter in 'Runoob': 
+             if letter == 'o':
+                pass
+                print ('执行 pass 块')     #—》这个部分在满足条件的时候会被执行会被执行
+         print ('当前字母 :', letter)
+'''
+#   16.函数
+'''
+    你可以定义一个由自己想要功能的函数，以下是简单的规则：
+        函数代码块以 def 关键词开头，后接函数标识符名称和圆括号 ()。
+        任何传入参数和自变量必须放在圆括号中间，圆括号之间可以用于定义参数。
+        函数的第一行语句可以选择性地使用文档字符串—用于存放函数说明。
+        函数内容以冒号起始，并且缩进。
+        return [表达式] 结束函数，选择性地返回一个值给调用方。不带表达式的return相当于返回 None。
+    格式：
+    def 函数名（参数列表）:
+        函数体
+    1.关键字
+    有global和nonlocal
+    global
+    要修改全局变量，在def里先声明全局变量，如global num
+    nonlocal
+    官方文档:
+    Names listed in a nonlocal statement, unlike to those listed in a global statement, 
+    must refer to pre-existing bindings in an enclosing scope 
+    (the scope in which a new binding should be created cannot be determined unambiguously).
+    Names listed in a nonlocal statement must not collide with pre-existing bindings in the local scope.
+    
+    总结在博客中https://blog.csdn.net/weixin_41586605/article/details/86508635
+    2.定义
+        当内部作用域想修改外部作用域的变量时，就要用到global和nonlocal关键字了。
+    3.参数及作用域
+        如果要修改嵌套作用域（enclosing 作用域，外层非全局作用域）中的变量则需要 nonlocal 关键字了
+        不具体描述，需要动手实践一下
+    4.返回值
+        若return了，则调用外函数则可以返回
+        否则需要在函数中后面调用内函数
+'''
+#   17.pip的使用
+'''
+    pip 是 Python 包管理工具，该工具提供了对Python 包的查找、下载、安装、卸载的功能。
+    目前如果你在 python.org 下载最新版本的安装包，则是已经自带了该工具。
+    Python 2.7.9 + 或 Python 3.4+ 以上版本都自带 pip 工具。
+    pip 官网：https://pypi.org/project/pip/
+    
+    查看版本（判断是否已安装） pip --version
+    安装分系统，windows可直接下载，linux（ubuntu为例）sudo python get-pip.py
+    升级 pip install -U pip
+    安装包 pip install Packet（一般指最新版本，也可以加上 =指定版本）
+    升级包 pip install --upgrade Packet
+    不过pycharm用这些比较少
+'''
+#   18.class 面向对象
+'''
+    概念直接照搬菜鸟教程：
+    面向对象技术简介
+        类(Class): 用来描述具有相同的属性和方法的对象的集合。它定义了该集合中每个对象所共有的属性和方法。对象是类的实例。
+        方法：类中定义的函数。
+        类变量：类变量在整个实例化的对象中是公用的。类变量定义在类中且在函数体之外。类变量通常不作为实例变量使用。
+        数据成员：类变量或者实例变量用于处理类及其实例对象的相关的数据。
+        方法重写：如果从父类继承的方法不能满足子类的需求，可以对其进行改写，这个过程叫方法的覆盖（override），也称为方法的重写。
+        局部变量：定义在方法中的变量，只作用于当前实例的类。
+        实例变量：在类的声明中，属性是用变量来表示的。这种变量就称为实例变量，是在类声明的内部但是在类的其他成员方法之外声明的。
+        继承：即一个派生类（derived class）继承基类（base class）的字段和方法。继承也允许把一个派生类的对象作为一个基类对象对待。例如，有这样一个设计：一个Dog类型的对象派生自Animal类，这是模拟"是一个（is-a）"关系（例图，Dog是一个Animal）。
+        实例化：创建一个类的实例，类的具体对象。
+        对象：通过类定义的数据结构实例。对象包括两个数据成员（类变量和实例变量）和方法。
+        和其它编程语言相比，Python 在尽可能不增加新的语法和语义的情况下加入了类机制。
+        Python中的类提供了面向对象编程的所有基本功能：类的继承机制允许多个基类，派生类可以覆盖基类中的任何方法，方法中可以调用基类中的同名方法。
+        对象可以包含任意数量和类型的数据。
+    
+    类对象支持两种操作：属性引用和实例化。
+    属性引用使用和 Python 中所有的属性引用一样的标准语法：obj.name。
+    类对象创建后，类命名空间中所有的命名都是有效属性名。所以如果类定义是这样: 
+        class MyClass:
+        """一个简单的类实例"""
+        i = 12345
+        def f(self):
+            return 'hello world'
+     
+        # 实例化类
+        x = MyClass()
+     
+        # 访问类的属性和方法
+        print("MyClass 类的属性 i 为：", x.i)
+            print("MyClass 类的方法 f 输出为：", x.f())
+            
+    self代表类的实例，而非类
+    类的方法与普通的函数只有一个特别的区别——它们必须有一个额外的第一个参数名称, 按照惯例它的名称是 self。
+    这个不用管，在调用函数时也可将其省略
+    
+    有一个名为 __init__() 的特殊方法（构造方法），该方法在类实例化时会自动调用，像下面这样：
+    def __init__(self):
+    在直接引用class时，其可看做一个名字为class的函数，例：
+        #类定义
+        class people:
+            #定义基本属性
+            name = ''
+            age = 0
+            #定义私有属性,私有属性在类外部无法直接进行访问
+            __weight = 0
+            #定义构造方法
+            def __init__(self,n,a,w):
+                self.name = n
+                self.age = a
+                self.__weight = w
+            def speak(self):
+                print("%s 说: 我 %d 岁。" %(self.name,self.age))
+         
+        # 实例化类
+        p = people('runoob',10,30)
+        p.speak()
+    
+    在类之外引用类中的函数时，以Class.function()的形式
+    （要在这里巧用占位符）
+    类的继承，重写等，不做具体描述，详细参考
+    http://www.runoob.com/python3/python3-class.html
+'''
+#   19.异常处理
+'''
+    即便Python程序的语法是正确的，在运行它的时候，也有可能发生错误。运行期检测到的错误被称为异常。
+    大多数的异常都不会被程序处理，都以错误信息的形式展现在这里:
+    异常以不同的类型出现，这些类型都作为信息的一部分打印出来: 
+    例子中的类型有 ZeroDivisionError，NameError 和 TypeError。
+    
+    异常处理一般使用try
+    try语句按照如下方式工作；
+        首先，执行try子句（在关键字try和关键字except之间的语句）
+        如果没有异常发生，忽略except子句，try子句执行后结束。
+        如果在执行try子句的过程中发生了异常，那么try子句余下的部分将被忽略。如果异常的类型和 except 之后的名称相符，那么对应的except子句将被执行。最后执行 try 语句之后的代码。
+        如果一个异常没有与任何的except匹配，那么这个异常将会传递给上层的try中。
+        一个 try 语句可能包含多个except子句，分别来处理不同的特定的异常。最多只有一个分支会被执行。
+        处理程序将只针对对应的try子句中的异常进行处理，而不是其他的 try 的处理程序中的异常。
+    例：
+    for arg in sys.argv[1:]:
+    try:
+        f = open(arg, 'r')
+    except IOError:
+        print('cannot open', arg)
+    else:
+        print(arg, 'has', len(f.readlines()), 'lines')
+        f.close()
+'''
+#   20.文件操作
+'''
+    readable()文件是否可读
+    writeable()文件是否可写
+    读操作：
+    几个常用的函数：
+    f.readlines()    #把整个文件，全部读取出来，形成一个数组，每一行形成数组的一个元素。
+    f.readline()    #读取文件，一行一行的读取
+    f.read()        #读取全文
+    注意：
+    在读取之前，若先写入，但并没有写入操作就退出，原文本的内容会消失
+    
+    #with open(file_path,encoding...) as f  另一种写法
+    f = open(r'D:/pycharm/coding/a.txt','r',encoding='utf-8')
+    line = f.readlines()
+    #   line = f.readline()
+    #   data = f.read()
+    f.close()
+    
+    读最常用for循环，用readline()读取整篇文章
+    for i in f:
+        print(i,strip())
+        
+    写操作：
+    data = 'eaed5633/n1fa'
+    with open(r'D:/pycharm/coding/a.txt', "w", ) as f:
+        for i in range(len(data)):
+            f.writelines(data[i])
+
+    f.close()
+    简单的几个例子，还需要仔细深入研究
+'''
